@@ -1,0 +1,17 @@
+# Java compiled files
+*.class
+
+# build folders
+bin/
+out/
+build/
+
+# VS Code settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# 画像ファイルを読み込まない
+images/
