@@ -1,14 +1,14 @@
-package Private_Study.secondTry;
+package Private_Study.thirdTry_PT;
 
 public class Adventure {
     Battle bt = new Battle();
     MonsterSelect ms = new MonsterSelect();
     private int battleCount = 0;
 
-    public void worldSelect(Hero h, Monster m) {
+    public void worldSelect(Hero h, Monster m, Party party) {
         while (h.getHp() > 0 && battleCount < 5) {
             SlowPoint.moreSlowPoint("--------------------");
-            SlowPoint.slowPoint("勇者" + h.getName() + "は森エリアへとやってきた。");
+            SlowPoint.slowPoint("勇者" + h.getName() + "達は、森エリアへとやってきた。");
             Monster newMonster = ms.randomChoice();
             boolean win = bt.battleStart(h, newMonster);
 

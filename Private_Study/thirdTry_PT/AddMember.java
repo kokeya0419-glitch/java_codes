@@ -1,10 +1,9 @@
-package Private_Study.secondTry;
+package Private_Study.thirdTry_PT;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddMember {
-    ArrayList<protagonist> member = new ArrayList();
     Scanner sc = new Scanner(System.in);
 
     public Hero addMember() {
@@ -17,22 +16,63 @@ public class AddMember {
     }
 
     // パーティメンバー追加
-    public protagonist addPartyMember() {
+    public Protagonist addPartyMember(Party party) {
+        if (party.isFull()) {
+            SlowPoint.slowPoint("これ以上仲間を追加することが出来ない");
+            return null;
+        }
         SlowPoint.slowPoint("仲間に加える職種を選択してください。");
-        SlowPoint.slowPoint("1:ウォーリアー　2:魔法使い　3:遊び人");
-        int select = sc.nextInt();
-        while(true){
-            select = sc.nextInt();
-            if(select >= 1 && select <=3){
-                break;
-            }else{
-                sc.next(); //文字列は排除
+        SlowPoint.slowPoint("1:ウォーリアー　2:魔法使い　3:遊び人　4:やめておく");
+        int select;
+        String name;
+
+        while (true) {
+            if (sc.hasNextInt()) {
+                select = sc.nextInt();
+                if (select >= 1 && select <= 4) {
+                    break;
+                }
+            } else {
+                sc.next(); // 文字列は排除
             }
-            SloPoint.slowPoint("正しい数値を入れてください");
+            SlowPoint.slowPoint("正しい数値を入れてください");
         }
-        if(select == 1){
-            SlowPoint.slowPoint("ウォーリアーの名前を決めてください。");
-            String name = sc.nextLine();
+
+        sc.nextLine(); // nwxtInt後の開業を捨てる
+
+        switch (select) {
+            case 1 -> {
+                SlowPoint.slowPoint("ウォーリアーの名前を決めてください。");
+                name = sc.nextLine();
+                Protagonist warrior = new Warrior(name);
+                SlowPoint.slowPoint(name + "が、仲間に加わった！");
+                warrior.birthComment(warrior);
+                return warrior;
+            }
+            case 2 -> {
+                SlowPoint.slowPoint("魔法使いの名前を決めてください。");
+                name = sc.nextLine();
+                Protagonist wizard = new Wizard(name);
+                SlowPoint.slowPoint(name + "が、仲間に加わった！");
+                wizard.birthComment(wizard);
+                return wizard;
+            }
+            case 3 -> {
+                SlowPoint.slowPoint("遊び人の名前を決めてください。");
+                name = sc.nextLine();
+                Protagonist gadabout = new Gadabout(name);
+                SlowPoint.slowPoint(name + "が、仲間に加わった！");
+                gadabout.birthcommnet(gadabout);
+                return gadabout;
+            }
+            case 4 -> {
+                SlowPoint.slowPoint("やめておこう・・・");
+                return null;
+            }
+            default -> {
+                SlowPoint.slowPoint("正しい番号を入力してください。");
+            }
         }
+        return null;
     }
 }

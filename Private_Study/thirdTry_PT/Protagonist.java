@@ -1,4 +1,4 @@
-package Private_Study.secondTry;
+package Private_Study.thirdTry_PT;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -9,7 +9,7 @@ abstract public class Protagonist extends Biology {
     private int movePower;
     private int movePoint;
     private int nextExp = 10;
-    private ArrayList<Skill> skills = new ArrayList();
+    private ArrayList<Skill> skills = new ArrayList<>();
 
     public void attack(Biology target) {
         int attackDamage = ((this.getPower() / 2) - (target.getDefend() / 4) + (int) (Math.random() * 10) + 1);
@@ -51,17 +51,22 @@ abstract public class Protagonist extends Biology {
             }
             this.setHp(newHp);
         } else if (fortune == 1) {
-            int poison = (this.getHp() * 10) / 10;
+            int poison = (this.getHp() * 5) / 10;
             SlowPoint.moreSlowPoint("これは毒のポーションだ・・・！\n" + "HPが" + poison + "ポイント失われた！");
+            this.setHp(this.getHp() - poison);
         }
     }
 
-    public void escape() {
+    public boolean tryEscape() {
         int fortune = (int) (Math.random() * 100);
-        if (fortune > 84) {
-            SlowPoint.slowPoint(this.getName() + "は、逃げ出した！");
-            return;
+        if (fortune > 79) {
+            SlowPoint.moreSlowPoint(this.getName() + "は、街まで逃げ出した・・・");
+            System.out.println("--------------------");
+            return true;
         }
+
+        SlowPoint.slowPoint(this.getName() + "は逃げようとしたが失敗した。");
+        return false;
     }
 
     public void skills(Monster m) {
@@ -71,7 +76,7 @@ abstract public class Protagonist extends Biology {
         }
 
         SlowPoint.slowPoint("使用する特技を選択してください。");
-        for (int i = 0;i < skills.size(); i++) {
+        for (int i = 0; i < skills.size(); i++) {
             Skill skill = skills.get(i);
             System.out.println((i + 1) + "： " + skill.getName() + "　MP：" + skill.getCost());
         }
@@ -79,20 +84,21 @@ abstract public class Protagonist extends Biology {
         int selectSkill = sc.nextInt();
         Skill skill = skills.get(selectSkill - 1);
 
-        if(this.getMp() < skill.getCost()){
+        if (this.getMp() < skill.getCost()) {
             SlowPoint.slowPoint("MPが足りない！");
             return;
         }
 
         this.setMp(this.getMp() - skill.getCost());
-        
-        int damage = (skill.getPower() + this.getPower() + (int)(Math.random() * 5 + 1)) / 2  - m.getDefend() / 4 + (int)(Math.random() * 10);
+
+        int damage = (skill.getPower() + this.getPower() + (int) (Math.random() * 5 + 1)) / 2 - m.getDefend() / 4
+                + (int) (Math.random() * 10);
         if (damage < 1) {
             damage = 1;
         }
         m.setHp(m.getHp() - damage);
         SlowPoint.slowPoint(this.getName() + "の" + skill.getName() + "!!!\n" +
-                            damage + "ダメージを与えた！")  ;
+                damage + "ダメージを与えた！");
     }
 
     public void learnSkill(Skill skill) {
@@ -111,8 +117,8 @@ abstract public class Protagonist extends Biology {
 
     public void levelUpCheck() {
         while (this.getExp() >= this.nextExp) {
-            this.levelUp();
             this.setExp(this.getExp() - nextExp);
+            this.levelUp();
         }
     }
 
@@ -133,10 +139,10 @@ abstract public class Protagonist extends Biology {
                 this.getName() + "は、レベルアップした！\n" +
                         "Lv." + this.getLevel() + "になった！\n" +
                         "体力と魔力が全回復した！\n");
-                if(this.getLevel() == 2){
-                    Skill newSkill = new Skill("居合切り", 15, 1);
-                    this.learnSkill(newSkill);
-                }
+        if (this.getLevel() == 2) {
+            Skill newSkill = new Skill("居合切り", 15, 1);
+            this.learnSkill(newSkill);
+        }
     }
 
     public void Specialty() {

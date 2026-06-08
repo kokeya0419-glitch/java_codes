@@ -1,4 +1,4 @@
-package Private_Study.secondTry;
+package Private_Study.thirdTry_PT;
 
 public class Monster extends Biology {
     private String type = "notHuman";

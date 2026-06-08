@@ -1,4 +1,4 @@
-package Private_Study.secondTry;
+package Private_Study.thirdTry_PT;
 
 public class SlowPoint {
     public static void slowPoint(String text) {

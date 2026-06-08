@@ -1,5 +1,4 @@
-package Private_Study.secondTry;
-
+package Private_Study.thirdTry_PT;
 import java.util.Scanner;
 
 public class BossBattle {
