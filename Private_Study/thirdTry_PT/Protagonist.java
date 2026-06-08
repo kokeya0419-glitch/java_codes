@@ -145,6 +145,17 @@ abstract public class Protagonist extends Biology {
         }
     }
 
+    // 生成時にステータス表示
+    public void birthComment() {
+        SlowPoint.slowPoint("あなたのステータスはこのようになりました。\n" +
+                "HP：" + this.getMaxHp() + "\n" +
+                "MP： " + this.getMaxMp() + "\n" +
+                "力：" + this.getPower() + "\n" +
+                "守り：" + this.getDefend() + "\n" +
+                "素早さ：" + this.getSpeed() + "\n" +
+                "賢さ：" + this.getIntelligence());
+    }
+
     public void Specialty() {
         this.setMoveName(moveName);
         this.setMovePower(movePower);

@@ -46,7 +46,7 @@ public class AddMember {
                 name = sc.nextLine();
                 Protagonist warrior = new Warrior(name);
                 SlowPoint.slowPoint(name + "が、仲間に加わった！");
-                warrior.birthComment(warrior);
+                warrior.birthComment();
                 return warrior;
             }
             case 2 -> {
@@ -54,7 +54,7 @@ public class AddMember {
                 name = sc.nextLine();
                 Protagonist wizard = new Wizard(name);
                 SlowPoint.slowPoint(name + "が、仲間に加わった！");
-                wizard.birthComment(wizard);
+                wizard.birthComment();
                 return wizard;
             }
             case 3 -> {
@@ -62,7 +62,7 @@ public class AddMember {
                 name = sc.nextLine();
                 Protagonist gadabout = new Gadabout(name);
                 SlowPoint.slowPoint(name + "が、仲間に加わった！");
-                gadabout.birthcommnet(gadabout);
+                gadabout.birthComment();
                 return gadabout;
             }
             case 4 -> {

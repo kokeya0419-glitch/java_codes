@@ -47,6 +47,7 @@ public class Party {
         return true;
     }
 
+    //pt回復
     public void recoverAll() {
         for (Protagonist member : members) {
             member.setHp(member.getMaxHp());
@@ -63,5 +64,28 @@ public class Party {
     public boolean isFull() {
         SlowPoint.slowPoint("現在のパーティの人数：" + members.size());
         return members.size() >= 3;
+    }
+
+    //パーティー生存確認
+    public boolean isAlive(){
+        for(Protagonist member : members){
+            if(member.getHp() > 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //生存しているメンバー格納
+    public Protagonist getRandomAliveMember(){
+        ArrayList<Protagonist> aliveMembers = new ArrayList<>();
+        for(Protagonist member : members){
+            if(member.getHp() > 0){
+                aliveMembers.add(member);
+            }
+        }
+
+        int index = (int)(Math.random() * aliveMembers.size());
+        return aliveMembers.get(index);
     }
 }

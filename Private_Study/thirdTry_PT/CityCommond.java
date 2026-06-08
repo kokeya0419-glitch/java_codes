@@ -7,6 +7,7 @@ public class CityCommond {
 
     public void commond(Hero h, Monster m, Party party){
             while(true){
+            System.out.println("--------------------");
             SlowPoint.slowPoint("何をしますか？\n" +
                                 "1:冒険へ出る　" + "2:仲間を探す　" + "3:宿で休む　" + "4:逃げ出す...");
 

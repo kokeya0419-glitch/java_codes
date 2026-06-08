@@ -10,7 +10,7 @@ public class Adventure {
             SlowPoint.moreSlowPoint("--------------------");
             SlowPoint.slowPoint("勇者" + h.getName() + "達は、森エリアへとやってきた。");
             Monster newMonster = ms.randomChoice();
-            boolean win = bt.battleStart(h, newMonster);
+            boolean win = bt.battleStart(party, newMonster);
 
             if (!win) {
                 break;
