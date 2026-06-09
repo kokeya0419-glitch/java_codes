@@ -25,4 +25,16 @@ public class Hero extends Protagonist {
                 "賢さ" + h.getIntelligence());
     }
 
+    public void learnSkillByLevel() {
+        if (this.getLevel() == 2) {
+            Skill newSkill = new Skill("居合切り", 15, 1);
+            this.learnSkill(newSkill);
+        }
+
+        if (this.getLevel() == 4) {
+            Skill newSkill = new Skill("ブレイクショット", 30, 3);
+            this.learnSkill(newSkill);
+        }
+    }
+
 }

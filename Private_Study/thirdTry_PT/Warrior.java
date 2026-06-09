@@ -5,7 +5,9 @@ public class Warrior extends Protagonist {
         this.setName(name);
 
         this.setMaxHp((this.getMaxHp() + 70) + (int)(Math.random() * 30));
+        this.setHp(getMaxHp());
         this.setMaxMp((this.getMaxMp() + 2) + (int)(Math.random() * 3));
+        this.setMp(this.getMaxMp());
         this.setPower((this.getPower() + 35) + (int)(Math.random() * 10));
         this.setDefend((this.getDefend() + 15) + (int)(Math.random() * 15));
         this.setSpeed((this.getSpeed() + 1) + (int)(Math.random() * 5));
@@ -20,5 +22,17 @@ public class Warrior extends Protagonist {
                 "守り：" + w.getDefend() + "\n" +
                 "素早さ：" + w.getSpeed() + "\n" +
                 "賢さ" + w.getIntelligence());
+    }
+
+    public void learnSkillByLevel() {
+        if (this.getLevel() == 2) {
+            Skill newSkill = new Skill("渾身の一撃", 20, 1);
+            this.learnSkill(newSkill);
+        }
+
+        if (this.getLevel() == 4) {
+            Skill newSkill = new Skill("兜割", 35, 3);
+            this.learnSkill(newSkill);
+        }
     }
 }

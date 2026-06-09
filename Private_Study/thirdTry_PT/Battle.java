@@ -10,6 +10,9 @@ public class Battle {
         System.out.println("----------");
         SlowPoint.slowPoint(m.getName() + "が現れた！");
 
+        System.out.println("パーティ人数：" + party.size());
+        party.showParty();
+
         while (party.isAlive() && m.getHp() > 0) {
             // 戦闘順を決める配列の生成
             ArrayList<Biology> turnOrder = new ArrayList<>();
@@ -28,7 +31,7 @@ public class Battle {
                 if (actor.getHp() <= 0) {
                     continue;
                 }
-                if (m.getHp() <= 0 || !party.isAlive()) {
+                if (!party.isAlive() || m.getHp() <= 0) {
                     break;
                 }
 
@@ -48,6 +51,7 @@ public class Battle {
                         }
                         SlowPoint.slowPoint("1～5を入力してください！");
                     }
+
                     switch (selectMove) {
                         case 1 -> member.attack(m);
                         case 2 -> member.skills(m);
@@ -61,10 +65,14 @@ public class Battle {
                     }
 
                     if (m.getHp() <= 0) {
-                        member.addExp(m.getExp());
+                        for (Protagonist mb : party.getMembers()) {
+                            if (mb.getHp() > 0) {
+                                mb.addExp(m.getExp());
+                                mb.levelUpCheck();
+                            }
+                        }
                         SlowPoint.slowPoint(m.getName() + "を倒した！\n");
                         SlowPoint.slowPoint(m.getExp() + "の経験値を得た");
-                        member.levelUpCheck();
                         return true;
                     }
 
@@ -74,16 +82,16 @@ public class Battle {
                     Protagonist target = party.getRandomAliveMember();
 
                     System.out.println("----------");
-                    SlowPoint.slowPoint(m.getName() + "の攻撃！");
+                    SlowPoint.slowPoint(monster.getName() + "の攻撃！");
 
                     int fortune = (int) (Math.random() * 100) + 1;
                     if (fortune < 76) {
-                        m.attack(target);
+                        monster.attack(target);
                     } else if (fortune < 96) {
-                        m.heal();
-                    } else if (fortune <= 100) {
-                        if (m.tryEscape()) {
-                            return true;
+                        monster.heal();
+                    } else {
+                        if (monster.tryEscape()) {
+                            return false;
                         }
                     }
                     if (!party.isAlive()) {

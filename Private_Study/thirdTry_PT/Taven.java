@@ -9,8 +9,8 @@ public class Taven {
         Scanner sc = new Scanner(System.in);
 
         while (true) {
-            SlowPoint.slowPoint("--------------------\n" +
-                    "酒場へやってきた。\n" +
+            System.out.println("--------------------");
+            SlowPoint.slowPoint("酒場へやってきた。\n" +
                     "１：仲間を探す\n" +
                     "２：パーティの確認\n" +
                     "３：酒場を出る");

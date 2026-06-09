@@ -5,7 +5,9 @@ public class Wizard extends Protagonist {
         this.setName(name);
 
         this.setMaxHp((this.getMaxHp() + 30) + (int)(Math.random() * 10));
+        this.setHp(getMaxHp());
         this.setMaxMp((this.getMaxMp() + 10) + (int)(Math.random() * 5));
+        this.setMp(this.getMaxMp());
         this.setPower((this.getPower() + 15) + (int)(Math.random() * 5));
         this.setDefend((this.getDefend() + 10) + (int)(Math.random() * 10));
         this.setSpeed((this.getSpeed() + 10) + (int)(Math.random() * 5));
@@ -20,5 +22,17 @@ public class Wizard extends Protagonist {
                 "守り：" + w.getDefend() + "\n" +
                 "素早さ：" + w.getSpeed() + "\n" +
                 "賢さ" + w.getIntelligence());
+    }
+
+    public void learnSkillByLevel() {
+        if (this.getLevel() == 2) {
+            Skill newSkill = new Skill("火の玉", 25, 2);
+            this.learnSkill(newSkill);
+        }
+
+        if (this.getLevel() == 4) {
+            Skill newSkill = new Skill("落雷", 40, 3);
+            this.learnSkill(newSkill);
+        }
     }
 }

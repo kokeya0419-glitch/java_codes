@@ -43,7 +43,7 @@ abstract public class Protagonist extends Biology {
     public void useItem() {
         int fortune = (int) (Math.random() * 2);
         if (fortune == 0) {
-            int heal = (this.getMaxHp() * 3) / 10;
+            int heal = (this.getMaxHp() * 5) / 10;
             SlowPoint.slowPoint("奇跡のポーションだ！\n" + "HPを" + heal + "ポイント回復した。");
             int newHp = this.getHp() + heal;
             if (newHp > this.getMaxHp()) {
@@ -122,6 +122,7 @@ abstract public class Protagonist extends Biology {
         }
     }
 
+    //LVアップ
     public void levelUp() {
         this.setLevel(this.getLevel() + 1);
 
@@ -139,10 +140,11 @@ abstract public class Protagonist extends Biology {
                 this.getName() + "は、レベルアップした！\n" +
                         "Lv." + this.getLevel() + "になった！\n" +
                         "体力と魔力が全回復した！\n");
-        if (this.getLevel() == 2) {
-            Skill newSkill = new Skill("居合切り", 15, 1);
-            this.learnSkill(newSkill);
-        }
+        this.learnSkillByLevel();
+    }
+
+    //各種族ごとに覚える特技の設定
+    public void learnSkillByLevel() {
     }
 
     // 生成時にステータス表示
