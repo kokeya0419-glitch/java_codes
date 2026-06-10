@@ -11,13 +11,13 @@ abstract public class Protagonist extends Biology {
     private int nextExp = 10;
     private ArrayList<Skill> skills = new ArrayList<>();
 
-    public void attack(Biology target) {
-        int attackDamage = ((this.getPower() / 2) - (target.getDefend() / 4) + (int) (Math.random() * 10) + 1);
+    public void attack(MonsterGroup mg) {
+        int attackDamage = ((this.getPower() / 2) - (mg.getDefend() / 4) + (int) (Math.random() * 10) + 1);
         if (attackDamage < 1) {
             attackDamage = 1;
         }
         SlowPoint.slowPoint(this.getName() + "の攻撃\n" + attackDamage + "のダメージを与えた");
-        target.setHp(target.getHp() - attackDamage);
+        mg.setHp(mg.getHp() - attackDamage);
     }
 
     public void guard(Monster m) {
@@ -69,7 +69,7 @@ abstract public class Protagonist extends Biology {
         return false;
     }
 
-    public void skills(Monster m) {
+    public void physicalSkills(MonsterGroup mg) {
         if (skills.size() == 0) {
             SlowPoint.slowPoint("覚えている技がありません。");
             return;
@@ -91,14 +91,46 @@ abstract public class Protagonist extends Biology {
 
         this.setMp(this.getMp() - skill.getCost());
 
-        int damage = (skill.getPower() + this.getPower() + (int) (Math.random() * 5 + 1)) / 2 - m.getDefend() / 4
+        int damage = (skill.getPower() + this.getPower() + (int) (Math.random() * 5 + 1)) / 2 - mg.getDefend() / 4
                 + (int) (Math.random() * 10);
         if (damage < 1) {
             damage = 1;
         }
-        m.setHp(m.getHp() - damage);
+        mg.setHp(mg.getHp() - damage);
         SlowPoint.slowPoint(this.getName() + "の" + skill.getName() + "!!!\n" +
                 damage + "ダメージを与えた！");
+    }
+
+    public void magicSkills(MonsterGroup mg) {
+        if (skills.size() == 0) {
+            SlowPoint.slowPoint("覚えている技がありません。");
+            return;
+        }
+
+        SlowPoint.slowPoint("使用する特技を選択してください。");
+        for (int i = 0; i < skills.size(); i++) {
+            Skill skill = skills.get(i);
+            System.out.println((i + 1) + "： " + skill.getName() + "　MP：" + skill.getCost());
+        }
+        Scanner sc = new Scanner(System.in);
+        int selectSkill = sc.nextInt();
+        Skill skill = skills.get(selectSkill - 1);
+
+        if (this.getMp() < skill.getCost()) {
+            SlowPoint.slowPoint("MPが足りない！");
+            return;
+        }
+
+        this.setMp(this.getMp() - skill.getCost());
+
+        int magicDamage = (skill.getPower() + this.getIntelligence() + (int) (Math.random() * 5 + 1)) / 2 - mg.getDefend() / 4
+                + (int) (Math.random() * 10);
+        if (magicDamage < 1) {
+            magicDamage = 1;
+        }
+        mg.setHp(mg.getHp() - magicDamage);
+        SlowPoint.slowPoint(this.getName() + "の" + skill.getName() + "!!!\n" +
+                magicDamage + "ダメージを与えた！");
     }
 
     public void learnSkill(Skill skill) {

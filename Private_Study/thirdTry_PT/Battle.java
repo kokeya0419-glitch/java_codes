@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Battle {
-    public boolean battleStart(Party party, Monster m) {
+    public boolean battleStart(Party party, MonsterGroup mg) {
         Scanner sc = new Scanner(System.in);
         int selectMove;
         System.out.println("----------");
-        SlowPoint.slowPoint(m.getName() + "が現れた！");
+        SlowPoint.slowPoint(mg.getName() + "が現れた！");
 
         System.out.println("パーティ人数：" + party.size());
         party.showParty();
 
-        while (party.isAlive() && m.getHp() > 0) {
+        while (party.isAlive() && mg.getHp() > 0) {
             // 戦闘順を決める配列の生成
             ArrayList<Biology> turnOrder = new ArrayList<>();
             for (Protagonist member : party.getMembers()) {
@@ -21,8 +21,8 @@ public class Battle {
                     turnOrder.add(member);
                 }
             }
-            if (m.getHp() > 0) {
-                turnOrder.add(m);
+            if (mg.getHp() > 0) {
+                turnOrder.add(mg);
             }
 
             turnOrder.sort((a, b) -> b.getSpeed() - a.getSpeed());
@@ -31,7 +31,7 @@ public class Battle {
                 if (actor.getHp() <= 0) {
                     continue;
                 }
-                if (!party.isAlive() || m.getHp() <= 0) {
+                if (!party.isAlive() || mg.getHp() <= 0) {
                     break;
                 }
 
@@ -53,8 +53,8 @@ public class Battle {
                     }
 
                     switch (selectMove) {
-                        case 1 -> member.attack(m);
-                        case 2 -> member.skills(m);
+                        case 1 -> member.attack(mg);
+                        case 2 -> member.skills(mg);
                         case 3 -> member.heal();
                         case 4 -> member.useItem();
                         case 5 -> {
