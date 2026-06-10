@@ -13,7 +13,7 @@ public class Battle {
         System.out.println("パーティ人数：" + party.size());
         party.showParty();
 
-        while (party.isAlive() && mg.getHp() > 0) {
+        while (party.isAlive() && mg.isAlive()) {
             // 戦闘順を決める配列の生成
             ArrayList<Biology> turnOrder = new ArrayList<>();
             for (Protagonist member : party.getMembers()) {
@@ -64,15 +64,15 @@ public class Battle {
                         }
                     }
 
-                    if (m.getHp() <= 0) {
+                    if (mg.getHp() <= 0) {
                         for (Protagonist mb : party.getMembers()) {
                             if (mb.getHp() > 0) {
-                                mb.addExp(m.getExp());
+                                mb.addExp(mg.getExp());
                                 mb.levelUpCheck();
                             }
                         }
-                        SlowPoint.slowPoint(m.getName() + "を倒した！\n");
-                        SlowPoint.slowPoint(m.getExp() + "の経験値を得た");
+                        SlowPoint.slowPoint(mg.getName() + "を倒した！\n");
+                        SlowPoint.slowPoint(mg.getExp() + "の経験値を得た");
                         return true;
                     }
 
