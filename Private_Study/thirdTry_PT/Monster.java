@@ -23,7 +23,7 @@ public class Monster extends Biology {
     }
 
     public void heal(){
-        int healPoint = (this.getMp() + this.getIntelligence() * (int)(Math.random() * 5) + 1)  / 2;
+        int healPoint = (this.getMaxHp() + this.getIntelligence() + (int)(Math.random() * 8) + 1) / 2;
         int newHp = this.getHp() + healPoint;
         if(newHp > this.getMaxHp()){
             newHp = this.getMaxHp();

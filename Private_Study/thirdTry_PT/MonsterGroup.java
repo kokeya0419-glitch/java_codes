@@ -18,6 +18,20 @@ public class MonsterGroup {
         return alive.get(index);
     }
 
+    //配列の中身を削除
+    public void clear(){
+        mg.clear();
+    }
+
+    //モンスターの名前表示
+    public String getMonsterNames(){
+        StringBuilder sb = new StringBuilder();
+        for(Monster m : mg){
+            sb.append("・").append(m.getName()).append("\n");
+        }
+        return sb.toString();
+    }
+
     //全滅判定
     public boolean isAlive(){
         for(Monster m : mg){
@@ -26,6 +40,15 @@ public class MonsterGroup {
             }
         }
         return false;
+    }
+
+    //魔物の群れの合計経験値
+    public int getTotallExp(){
+        int totallExp = 0;
+        for(Monster monster : mg){
+            totallExp += monster.getExp();
+        }
+        return totallExp;
     }
 
     public void addMonster(Monster monster) {

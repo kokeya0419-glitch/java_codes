@@ -1,108 +1,100 @@
 package Private_Study.thirdTry_PT;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BossBattle {
-    public boolean battleStart(Hero h, Monster m) {
+    public boolean battleStart(Party party, Monster m) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("----------");
+        System.out.println("====================");
         SlowPoint.moreSlowPoint("ボスの'" + m.getName() + "'が現れた！");
 
-        while (h.getHp() > 0 && m.getHp() > 0) {
-            if (h.getSpeed() >= m.getSpeed()) {
-                System.out.println("----------");
-                System.out.println("体力：" + h.getHp() + "　" + "魔力：" + h.getMp());
-                SlowPoint.slowPoint(h.getName() + "のターン！\n" + "行動を選択してください\n" +
-                        "１；戦う　" + "２：特技　" + "３：回復　" + "４：道具　" + "5：逃げる");
-                int selectMove = sc.nextInt();
-
-                switch (selectMove) {
-                    case 1 -> {
-                        h.attack(m);
-                    }
-                    case 2 -> {
-                        h.skills(m);
-                    }
-                    case 3 -> {
-                        h.heal();
-
-                    }
-                    case 4 -> {
-                        h.useItem();
-                    }
-                    case 5 -> {
-                        h.escape();
-                        return false;
-                    }
-                }
-                if (m.getHp() <= 0) {
-                    SlowPoint.slowPoint(m.getName() + "を倒した！");
-                    h.addExp(m.getExp());
-                    h.levelUpCheck();
-                    return true;
-                }
-
-                System.out.println("----------");
-                SlowPoint.slowPoint(m.getName() + "のターン！");
-                int fortune = (int) (Math.random() * 100) + 1;
-                if (fortune < 51) {
-                    m.attack(h);
-                } else if (fortune < 76) {
-                    m.heal();
-                } else if (fortune <= 100) {
-                    m.tryEscape();
-                }
-                if (h.getHp() <= 0) {
-                    SlowPoint.slowPoint(h.getName() + "は倒された・・・目の前が真っ暗になった・・・");
-                    return false;
+        while (party.isAlive() && m.getHp() > 0) {
+            ArrayList<Biology> turnOrder = new ArrayList<>();
+            for (Protagonist member : party.getMembers()) {
+                if (member.getHp() > 0) {
+                    turnOrder.add(member);
                 }
             }
+            if (m.getHp() > 0) {
+                turnOrder.add(m);
+            }
 
-            if (h.getSpeed() < m.getSpeed()) {
-                System.out.println("----------");
-                SlowPoint.slowPoint(m.getName() + "のターン！");
-                int fortune = (int) (Math.random() * 100) + 1;
-                if (fortune < 51) {
-                    m.attack(h);
-                } else if (fortune < 76) {
-                    m.heal();
-                } else if (fortune <= 100) {
-                    m.tryEscape();
+            turnOrder.sort((a, b) -> b.getSpeed() - a.getSpeed());
+
+            for (Biology actor : turnOrder) {
+                if (actor.getHp() <= 0) {
+                    continue;
                 }
-                if (h.getHp() <= 0) {
-                    SlowPoint.slowPoint(h.getName() + "は倒された・・・目の前が真っ暗になった・・・");
-                    return false;
+                if (!party.isAlive() || m.getHp() <= 0) {
+                    break;
                 }
 
-                System.out.println("----------");
-                System.out.println("体力：" + h.getHp() + "　" + "魔力：" + h.getMp());
-                SlowPoint.slowPoint(h.getName() + "のターン！\n" + "行動を選択してください\n" +
-                        "１；戦う　" + "２：特技　" + "３：回復　" + "４：道具　" + "5：逃げる");
-                int selectMove = sc.nextInt();
+                if (actor instanceof Protagonist) {
+                    Protagonist member = (Protagonist) actor;
+                    System.out.println("====================");
+                    System.out.println("体力：" + member.getHp() + "　" + "魔力：" + member.getMp());
+                    SlowPoint.slowPoint(member.getName() + "のターン！\n" + "行動を選択してください");
+                    System.out.println("--------------------");
+                    SlowPoint.slowPoint("体力：" + member.getHp() + "　" + "魔力：" + member.getMp() + "\n" +
+                                        "１：たたかう　" + "２：とくぎ　" + "３：回復　" + "４：道具　" + "5：逃げる");
+                    int selectMove;
 
-                switch (selectMove) {
-                    case 1 -> {
-                        h.attack(m);
-                    }
-                    case 2 -> {
-                        h.skills(m);
+                    while (true) {
+                        try {
+                            selectMove = sc.nextInt();
+                            if (selectMove >= 1 && selectMove <= 5) {
+                                break;
+                            }
+                            SlowPoint.slowPoint("1～5を入力してください！");
+                        } catch (Exception e) {
+                            SlowPoint.slowPoint("半角数字で入力してください。");
+                            sc.next();
+                        }
                     }
 
-                    case 3 -> {
-                        h.heal();
+                    switch (selectMove) {
+                        case 1 -> member.attack(m);
+                        case 2 -> member.skills(party, m);
+                        case 3 -> member.heal();
+                        case 4 -> member.useItem();
+                        case 5 -> {
+                            if (member.tryEscape()) {
+                                return false;
+                            }
+                        }
                     }
-                    case 4 -> {
-                        h.useItem();
+
+                    if (m.getHp() <= 0) {
+                        SlowPoint.slowPoint(m.getName() + "を倒した！");
+                        for (Protagonist mb : party.getMembers()) {
+                            if (mb.getHp() > 0) {
+                                mb.addExp(m.getExp());
+                                mb.levelUpCheck();
+                            }
+                        }
+                        return true;
                     }
-                    case 5 -> {
-                        h.escape();
+                } else if (actor instanceof Monster) {
+                    Monster boss = (Monster) actor;
+                    Protagonist target = party.getRandomAliveMember();
+                    System.out.println("====================");
+                    SlowPoint.slowPoint(boss.getName() + "のターン！");
+                    int fortune = (int) (Math.random() * 100) + 1;
+                    if (fortune < 46) {
+                        boss.attack(target);
+                        if(target.getHp() <= 0){
+                            SlowPoint.moreSlowPoint(target.getName() + "は、力尽きた・・・");
+                        }
+                    } else if (fortune < 66) {
+                        boss.heal();
+                    } else {
+                        ((Dragon) boss).breath(party);
+                    }
+                    if (!party.isAlive()) {
+                        SlowPoint.slowPoint("パーティは全滅してしまった・・・");
                         return false;
                     }
-                }
-                if (m.getHp() <= 0) {
-                    SlowPoint.slowPoint(m.getName() + "を倒した！");
-                    h.addExp(m.getExp());
-                    h.levelUpCheck();
-                    return true;
                 }
             }
         }

@@ -9,12 +9,27 @@ public class Taven {
         Scanner sc = new Scanner(System.in);
 
         while (true) {
-            System.out.println("--------------------");
+            System.out.println("====================");
             SlowPoint.slowPoint("酒場へやってきた。\n" +
                     "１：仲間を探す\n" +
                     "２：パーティの確認\n" +
                     "３：酒場を出る");
-            int selectMove = sc.nextInt();
+            int selectMove;
+            int max = party.size();
+
+            // 入力確認
+            while (true) {
+                try {
+                    selectMove = sc.nextInt();
+                    if (selectMove >= 1 && selectMove <= 3) {
+                        break;
+                    }
+                    SlowPoint.slowPoint("1～3を入力してください！");
+                } catch (Exception e) {
+                    SlowPoint.slowPoint("半角数字で入力してください。");
+                    sc.next(); // 文字列は排除する
+                }
+            }
 
             switch (selectMove) {
                 case 1 -> {
@@ -29,13 +44,16 @@ public class Taven {
                     SlowPoint.slowPoint("詳細を見たい仲間の番号を選択");
                     int index;
                     while (true) {
-                        index = sc.nextInt();
-                        if (index >= 1 && index <= 3) {
-                            break;
-                        } else {
+                        try {
+                            index = sc.nextInt();
+                            if (index >= 1 && index <= max) {
+                                break;
+                            }
+                            SlowPoint.slowPoint("1～3を入力してください！");
+                        } catch (Exception e) {
+                            SlowPoint.slowPoint("半角数字で入力してください。");
                             sc.next(); // 文字列は排除する
                         }
-                        SlowPoint.slowPoint("1～3を入力してください！");
                     }
                     party.showMemberDetail(index - 1);
                 }

@@ -15,3 +15,5 @@ Thumbs.db
 
 # 画像ファイルを読み込まない
 images/
+
+*.class

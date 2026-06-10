@@ -24,17 +24,39 @@ public class Gadabout extends Protagonist {
                 "賢さ" + g.getIntelligence());
     }
 
+    // LVアップ
+    public void levelUp() {
+        this.setLevel(this.getLevel() + 1);
+
+        this.setMaxHp(this.getMaxHp() + (int) (Math.random() * 3) + 1);
+        this.setMaxMp(this.getMaxMp() + (int) (Math.random() * 3) + 1);
+        this.setPower(this.getPower() + (int) (Math.random() * 3) + 1);
+        this.setDefend(this.getDefend() + (int) (Math.random() * 3) + 1);
+        this.setSpeed(this.getSpeed() + (int) (Math.random() * 3) + 1);
+        this.setIntelligence(this.getIntelligence() + (int) (Math.random() * 3) + 1);
+
+        this.setHp(this.getMaxHp());
+        this.setMp(this.getMaxMp());
+        this.setNextExp(this.getLevel() * 20);
+
+        SlowPoint.moreSlowPoint(
+                this.getName() + "は、レベルアップした！\n" +
+                        "Lv." + this.getLevel() + "になった！\n" +
+                        "体力と魔力が全回復した！\n");
+        this.learnSkillByLevel();
+    }
+
     public void learnSkillByLevel() {
         if (this.getLevel() == 3) {
-            this.learnSkill(new Skill("変な踊り", 10, 1));
+            this.learnPhysicalSkill(new Skill("変な踊り", 10, 1));
         }
 
-        if (this.getLevel() == 4) {
-            this.learnSkill(new Skill("悪ふざけ", 25, 3));
+        if (this.getLevel() == 5) {
+            this.learnPhysicalSkill(new Skill("悪ふざけ", 25, 3));
         }
 
-        if (this.getLevel() == 6) {
-            this.learnSkill(new Skill("奇跡の一発芸", 60, 5));
+        if (this.getLevel() == 8) {
+            this.learnPhysicalSkill(new Skill("奇跡の一発芸", 60, 5));
         }
     }
 }

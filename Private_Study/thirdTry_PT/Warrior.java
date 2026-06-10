@@ -4,11 +4,11 @@ public class Warrior extends Protagonist {
     public Warrior(String name){
         this.setName(name);
 
-        this.setMaxHp((this.getMaxHp() + 70) + (int)(Math.random() * 30));
+        this.setMaxHp((this.getMaxHp() + 50) + (int)(Math.random() * 30));
         this.setHp(getMaxHp());
         this.setMaxMp((this.getMaxMp() + 2) + (int)(Math.random() * 3));
         this.setMp(this.getMaxMp());
-        this.setPower((this.getPower() + 35) + (int)(Math.random() * 10));
+        this.setPower((this.getPower() + 40) + (int)(Math.random() * 10));
         this.setDefend((this.getDefend() + 15) + (int)(Math.random() * 15));
         this.setSpeed((this.getSpeed() + 1) + (int)(Math.random() * 5));
         this.setIntelligence((this.getIntelligence() + 5) + (int)(Math.random() * 5));
@@ -24,15 +24,37 @@ public class Warrior extends Protagonist {
                 "賢さ" + w.getIntelligence());
     }
 
+    // LVアップ
+    public void levelUp() {
+        this.setLevel(this.getLevel() + 1);
+
+        this.setMaxHp(this.getMaxHp() + (int) (Math.random() * 8) + 1);
+        this.setMaxMp(this.getMaxMp() + (int) (Math.random() * 3) + 1);
+        this.setPower(this.getPower() + (int) (Math.random() * 5) + 1);
+        this.setDefend(this.getDefend() + (int) (Math.random() * 5) + 1);
+        this.setSpeed(this.getSpeed() + (int) (Math.random() * 2) + 1);
+        this.setIntelligence(this.getIntelligence() + (int) (Math.random() * 3) + 1);
+
+        this.setHp(this.getMaxHp());
+        this.setMp(this.getMaxMp());
+        this.setNextExp(this.getLevel() * 18);
+
+        SlowPoint.moreSlowPoint(
+                this.getName() + "は、レベルアップした！\n" +
+                        "Lv." + this.getLevel() + "になった！\n" +
+                        "体力と魔力が全回復した！\n");
+        this.learnSkillByLevel();
+    }
+
     public void learnSkillByLevel() {
         if (this.getLevel() == 2) {
             Skill newSkill = new Skill("渾身の一撃", 20, 1);
-            this.learnSkill(newSkill);
+            this.learnPhysicalSkill(newSkill);
         }
 
-        if (this.getLevel() == 4) {
+        if (this.getLevel() == 5) {
             Skill newSkill = new Skill("兜割", 35, 3);
-            this.learnSkill(newSkill);
+            this.learnPhysicalSkill(newSkill);
         }
     }
 }

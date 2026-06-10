@@ -1,10 +1,12 @@
 package Private_Study.thirdTry_PT;
 
-import java.util.ArrayList;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.Scanner;
 
 public class AddMember {
-    Scanner sc = new Scanner(System.in);
+    // 文字化け対策: Windows端末からの日本語入力に合わせる
+    Scanner sc = new Scanner(new InputStreamReader(System.in, Charset.forName("MS932")));
 
     public Hero addMember() {
         SlowPoint.slowPoint("新たな勇者を作成します。\n" + "勇者の名前を教えてください");
@@ -22,27 +24,28 @@ public class AddMember {
             return null;
         }
         SlowPoint.slowPoint("仲間に加える職種を選択してください。");
-        SlowPoint.slowPoint("1:ウォーリアー　2:魔法使い　3:遊び人　4:やめておく");
+        SlowPoint.slowPoint("1:戦士　2:魔法使い　3:遊び人　4:やめておく");
         int select;
         String name;
 
-        while (true) {
-            if (sc.hasNextInt()) {
-                select = sc.nextInt();
-                if (select >= 1 && select <= 4) {
-                    break;
+        while(true){
+                try{
+                    select = sc.nextInt();
+                    if(select >= 1 && select <= 4){
+                        break;
+                    }
+                    SlowPoint.slowPoint("1～4を入力してください！");
+                }catch(Exception e){
+                    SlowPoint.slowPoint("半角数字で入力してください。");
+                    sc.next(); //文字列は排除する
                 }
-            } else {
-                sc.next(); // 文字列は排除
             }
-            SlowPoint.slowPoint("正しい数値を入れてください");
-        }
 
-        sc.nextLine(); // nwxtInt後の開業を捨てる
+        sc.nextLine(); // nwxtInt後の改行を捨てる
 
         switch (select) {
             case 1 -> {
-                SlowPoint.slowPoint("ウォーリアーの名前を決めてください。");
+                SlowPoint.slowPoint("戦士の名前を決めてください。");
                 name = sc.nextLine();
                 Protagonist warrior = new Warrior(name);
                 SlowPoint.slowPoint(name + "が、仲間に加わった！");

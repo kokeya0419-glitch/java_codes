@@ -5,15 +5,14 @@ public class Adventure {
     MonsterSelect ms = new MonsterSelect();
     private int battleCount = 0;
 
-    public void worldSelect(Hero h, Monster m, Party party) {
+    public boolean worldSelect(Hero h, MonsterGroup mg, Party party) {
         while (h.getHp() > 0 && battleCount < 5) {
-            SlowPoint.moreSlowPoint("--------------------");
-            SlowPoint.slowPoint("勇者" + h.getName() + "達は、森エリアへとやってきた。");
-            Monster newMonster = ms.randomChoice();
-            boolean win = bt.battleStart(party, newMonster);
+            SlowPoint.moreSlowPoint("====================");
+            SlowPoint.slowPoint(h.getName() + "達は、森エリアへとやってきた。");
+            boolean win = bt.battleStart(party, mg);
 
             if (!win) {
-                break;
+                return false;
             }
             battleCount++;
             SlowPoint.slowPoint("あなたの連勝数：" + battleCount);
@@ -21,8 +20,9 @@ public class Adventure {
         if (battleCount == 5) {
             BossBattle bossBt = new BossBattle();
             Monster boss = new Dragon("ドラゴン");
-            SlowPoint.slowPoint("何か不思議な気配がする・・・、次はボスが現れそうだ・・・・。");
-            bossBt.battleStart(h, boss);
+            SlowPoint.slowPoint("何か不思議な気配がする・・・");
+            bossBt.battleStart(party, boss);
         }
+        return true;
     }
 }
