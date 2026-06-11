@@ -33,7 +33,7 @@ abstract public class Protagonist extends Biology {
             return;
         }
         this.setMp(newMp);
-        int healPoint = (this.getHp() + this.getIntelligence() + (int) (Math.random() * 5) / 4);
+        int healPoint = (this.getHp() + this.getIntelligence() + (int) (Math.random() * 5) / 5);
         int newHp = this.getHp() + healPoint;
         if (newHp > this.getMaxHp()) {
             newHp = this.getMaxHp();
@@ -77,7 +77,6 @@ abstract public class Protagonist extends Biology {
     public void skills(Party party, Monster m) {
         while (true) {
             int select;
-            Scanner sc = new Scanner(System.in);
             SlowPoint.slowPoint("特技選択\n" + "1:物理攻撃　2:魔法攻撃　3:回復魔法　0:戻る");
 
             while (true) {
@@ -89,7 +88,7 @@ abstract public class Protagonist extends Biology {
                 }
                 SlowPoint.slowPoint("0～3を入力してください!");
             }
-             
+            
             switch(select){
                 case 0 -> {
                     return;
@@ -120,13 +119,12 @@ abstract public class Protagonist extends Biology {
             return false;
         }
 
-        SlowPoint.slowPoint("使用する特技を選択してください。(0で戻る)");
+        SlowPoint.slowPoint("使用する特技を選択してください。");
         for (int i = 0; i < physicalSkills.size(); i++) {
             Skill skill = physicalSkills.get(i);
             System.out.println((i + 1) + "： " + skill.getName() + "　MP：" + skill.getCost());
         }
         System.out.println("0： 戻る");
-        Scanner sc = new Scanner(System.in);
         int selectSkill = sc.nextInt();
         int max = physicalSkills.size();
 
@@ -177,7 +175,6 @@ abstract public class Protagonist extends Biology {
             System.out.println((i + 1) + "： " + skill.getName() + "　MP：" + skill.getCost());
         }
         System.out.println("0： 戻る");
-        Scanner sc = new Scanner(System.in);
         int selectSkill = sc.nextInt();
         int max = magicSkills.size();
 
@@ -227,13 +224,12 @@ abstract public class Protagonist extends Biology {
             return false;
         }
 
-        SlowPoint.slowPoint("使用する特技を選択してください。(0で戻る)");
+        SlowPoint.slowPoint("使用する特技を選択してください。");
         for (int i = 0; i < healSkills.size(); i++) {
             Skill skill = healSkills.get(i);
             System.out.println((i + 1) + "： " + skill.getName() + "　MP：" + skill.getCost());
         }
         System.out.println("0： 戻る");
-        Scanner sc = new Scanner(System.in);
         int selectSkill = sc.nextInt();
         int max = healSkills.size();
 
@@ -282,9 +278,7 @@ abstract public class Protagonist extends Biology {
     // 回復魔法の選択先
     public Protagonist selectHealTarget(Party party) {
         party.showParty();
-        SlowPoint.slowPoint("回復する仲間を選択してください。(0で戻る)");
-
-        Scanner sc = new Scanner(System.in);
+        SlowPoint.slowPoint("回復する仲間を選択してください。");
         int select;
 
         while (true) {
@@ -316,11 +310,13 @@ abstract public class Protagonist extends Biology {
         skills.add(skill);
         magicSkills.add(skill);
         SlowPoint.moreSlowPoint(this.getName() + "は" + skill.getName() + "を覚えた！");
+        System.out.println("--------------------");
     }
     public void learnHealSkill(Skill skill) {
         skills.add(skill);
         healSkills.add(skill);
         SlowPoint.moreSlowPoint(this.getName() + "は" + skill.getName() + "を覚えた！");
+        System.out.println("--------------------");
     }
 
     public ArrayList<Skill> getSkills() {

@@ -4,7 +4,7 @@ public class Dragon extends Monster {
     public Dragon(String name) {
         this.setName(name);
 
-        this.setHp((this.getHp() + 200) + (int) (Math.random() * 25));
+        this.setHp((this.getHp() + 250) + (int) (Math.random() * 25));
         this.setMaxHp(this.getHp());
         this.setMp((this.getMp() + 10) + (int) (Math.random() * 10));
         this.setMaxMp(this.getMaxMp());

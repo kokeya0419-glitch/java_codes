@@ -48,12 +48,12 @@ public class Wizard extends Protagonist {
 
     public void learnSkillByLevel() {
         if (this.getLevel() == 2) {
-            Skill newSkill = new Skill("火の玉", 40, 3);
+            Skill newSkill = new Skill("火の玉", 50, 3);
             this.learnMagicSkill(newSkill);
         }
 
         if (this.getLevel() == 4) {
-            Skill newSkill = new Skill("落雷", 55, 5);
+            Skill newSkill = new Skill("落雷", 75, 5);
             this.learnMagicSkill(newSkill);
         }
     }
