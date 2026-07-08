@@ -31,7 +31,6 @@ public class Dragon extends Monster {
             if (member.getHp() <= 0) {
                 SlowPoint.slowPoint(member.getName() + "は、力尽きた・・・");
             }
-
         }
     }
 }

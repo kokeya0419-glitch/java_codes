@@ -13,6 +13,7 @@ abstract public class Protagonist extends Biology {
     private ArrayList<Skill> physicalSkills = new ArrayList<>();
     private ArrayList<Skill> magicSkills = new ArrayList<>();
     private ArrayList<Skill> healSkills = new ArrayList<>();
+    private Scanner sc = new Scanner(System.in);
 
     // 攻撃行動
     public void attack(Monster m) {
@@ -125,7 +126,7 @@ abstract public class Protagonist extends Biology {
             System.out.println((i + 1) + "： " + skill.getName() + "　MP：" + skill.getCost());
         }
         System.out.println("0： 戻る");
-        int selectSkill = sc.nextInt();
+        int selectSkill;
         int max = physicalSkills.size();
 
         while (true) {
@@ -141,7 +142,7 @@ abstract public class Protagonist extends Biology {
         if (selectSkill == 0) {
             return false;
         }
-        
+
         Skill skill = physicalSkills.get(selectSkill - 1);
 
         if (this.getMp() < skill.getCost()) {

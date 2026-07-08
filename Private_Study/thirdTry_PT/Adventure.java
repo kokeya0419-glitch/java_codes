@@ -20,7 +20,7 @@ public class Adventure {
         if (battleCount == 5) {
             BossBattle bossBt = new BossBattle();
             Monster boss = new Dragon("ドラゴン");
-            SlowPoint.slowPoint("何か不思議な気配がする・・・");
+            SlowPoint.slowPoint("何か不穏な気配がする・・・");
             bossBt.battleStart(party, boss);
         }
         return true;
